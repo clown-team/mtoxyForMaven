@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import vip.smilex.util.AESCTR;
+import vip.smilex.util.ExceptionUtils;
 import vip.smilex.util.PeerRecord;
 import vip.smilex.util.Utils;
 
@@ -172,7 +173,10 @@ public class Obfuscated2Handshaker extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        LOG.error("Caught exception during Obfuscated2 handshake with {}", ctx.channel().remoteAddress(), cause);
+        if (!ExceptionUtils.isConnectionResetException(cause)) {
+            LOG.error("Caught exception during Obfuscated2 handshake with {}", ctx.channel().remoteAddress(), cause);
+        }
+
         ctx.close();
         handshakePromise.setFailure(cause);
     }

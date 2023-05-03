@@ -7,11 +7,11 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Singleton
 public class StatisticsTracker {
-    private AtomicInteger[] connectionCounts;
-    private AtomicInteger[] activeConnections;
-    private AtomicInteger[] connectionFailures;
-    private AtomicInteger[] connectionExceptions;
-    private AtomicLong[] bytesForwarded;
+    private final AtomicInteger[] connectionCounts;
+    private final AtomicInteger[] activeConnections;
+    private final AtomicInteger[] connectionFailures;
+    private final AtomicInteger[] connectionExceptions;
+    private final AtomicLong[] bytesForwarded;
 
     @Inject
     public StatisticsTracker() {

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import vip.smilex.MTServer;
 import vip.smilex.stats.ConnectionType;
+import vip.smilex.util.ExceptionUtils;
 import vip.smilex.util.PeerRecord;
 
 import java.util.List;
@@ -88,7 +89,11 @@ public class DatacenterConnectionHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        LOG.error("Exception caught in datacenter connection handler from {}", ctx.channel().remoteAddress(), cause);
+
+        if (!ExceptionUtils.isConnectionResetException(cause)) {
+            LOG.error("Exception caught in datacenter connection handler from {}", ctx.channel().remoteAddress(), cause);
+        }
+
         ctx.close();
     }
 }
