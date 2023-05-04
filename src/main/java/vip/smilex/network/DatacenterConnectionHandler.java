@@ -90,7 +90,7 @@ public class DatacenterConnectionHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 
-        if (!ExceptionUtils.isConnectionResetException(cause)) {
+        if (ExceptionUtils.isNotIoException(cause)) {
             LOG.error("Exception caught in datacenter connection handler from {}", ctx.channel().remoteAddress(), cause);
         }
 

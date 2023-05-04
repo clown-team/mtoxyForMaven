@@ -173,7 +173,7 @@ public class Obfuscated2Handshaker extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        if (!ExceptionUtils.isConnectionResetException(cause)) {
+        if (ExceptionUtils.isNotIoException(cause)) {
             LOG.error("Caught exception during Obfuscated2 handshake with {}", ctx.channel().remoteAddress(), cause);
         }
 

@@ -30,8 +30,7 @@ public class ForwardingHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-
-        if (!ExceptionUtils.isConnectionResetException(cause)) {
+        if (ExceptionUtils.isNotIoException(cause)) {
             LOG.error("Exception caught while forwarding: {} -> {}", ctx.channel().remoteAddress(), to.remoteAddress(),
                     cause);
         }
